@@ -1,0 +1,12 @@
+.button {
+    width: 100%;
+}
+
+.row {
+    margin-top: 8px;
+    display: flex;
+}
+
+.actionButton {
+    width: 50%;
+}

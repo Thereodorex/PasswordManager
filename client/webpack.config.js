@@ -9,11 +9,15 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'webpack_build/'),
         filename: 'bundle.js',
+        publicPath: '/'
     },
     module: {
-        rules: [           
+        rules: [
             {
                 test: /\.(ts|tsx|jsx|js)$/,
+                resolve: {
+                    extensions: [".js", ".jsx",],
+                },
                 loader: 'babel-loader',
                 options: {
                     babelrc: false,
@@ -26,28 +30,32 @@ module.exports = {
                                 targets: {
                                     browsers: ['last 2 versions', '> 1%', 'not ie < 11'],
                                     esmodules: true,
-                                }
-                            }
+                                },
+                            },
                         ],
                         ['@babel/preset-react',
-                        {"runtime": "automatic"}]
+                        {"runtime": "automatic"}],
                         // '@babel/preset-typescript',
-                    ]
-                }
+                    ],
+                },
             },
             {
                 test: /\.svg$/,
                 include: [
                     path.resolve(__dirname, 'src/assets'),
                 ],
-                use: 'svg-inline-loader'
+                use: 'svg-inline-loader',
             },
             {
                 test: /\.css$/i,
                 exclude: /(node_modules|bower_components)/,
                 use: ["style-loader", "css-loader"],
-            }
-        ]
+            },
+        ],
+    },
+    devServer: {
+        // contentBase: './webpack_build',
+        historyApiFallback: true,
     },
     plugins: [
         new Dotenv({
@@ -61,4 +69,12 @@ module.exports = {
         }),
     ],
     mode: 'development',
+    resolve: {
+        alias: {
+            '@components': path.resolve(__dirname, 'src/components/'),
+            '@pages': path.resolve(__dirname, 'src/pages/'),
+            '@api': path.resolve(__dirname, 'src/apiUrls'),
+            '@utils': path.resolve(__dirname, 'src/utils')
+        },
+    },
 }

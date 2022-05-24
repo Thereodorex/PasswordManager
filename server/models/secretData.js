@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 const secretDataScheme = new Schema({
     id: Number,
     name: String,
-    dataTypeId: Number,
+    // dataTypeId: Number,
+    userId: String,
     fields: [{
         name: String,
         value: String,
