@@ -3016,7 +3016,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"API_URL\": function() { return /* binding */ API_URL; }\n/* harmony export */ });\nvar API_URL = 'http://195.2.80.65:3000';\n\n//# sourceURL=webpack://passwordmanager/./src/config.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"API_URL\": function() { return /* binding */ API_URL; }\n/* harmony export */ });\nvar API_URL = 'http://127.0.0.1:3000';\n\n//# sourceURL=webpack://passwordmanager/./src/config.js?");
 
 /***/ }),
 
