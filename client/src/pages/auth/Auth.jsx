@@ -9,9 +9,17 @@ import Register from './Register'
 import classes from './styles.module.css';
 
 export default function Auth() {
+    const [isSuccessReg, _setSuccessReg] = useState(false);
     const navigate = useNavigate();
     const masterPassword = localStorage.getItem('masterPassword');
     const [alignment, setAlignment] = React.useState('login');
+
+    const setSuccessReg = () => {
+        setAlignment('login');
+        _setSuccessReg(true);
+    };
+
+    const removeSuccessRegWarning = () => _setSuccessReg(false);
 
     const handleChange = (_, newAlignment) => {
         if (newAlignment && newAlignment !== alignment)
@@ -38,8 +46,8 @@ export default function Auth() {
             </ToggleButtonGroup>
             <div className={classes.form}>{
                 alignment === 'login'
-                ? <Login />
-                : <Register />
+                ? <Login isSuccessReg={isSuccessReg} removeSuccessRegWarning={removeSuccessRegWarning} />
+                : <Register setSuccessReg={setSuccessReg} />
             }</div>
         </div>
     );

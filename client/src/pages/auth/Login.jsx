@@ -8,20 +8,21 @@ import Input from '@components/input';
 import { loginUrl, usersUrl } from '@api';
 import fetchWithTimeout from '@utils/fetchWithTimeout';
 
-export default function App() {
+export default function Login({ isSuccessReg, removeSuccessRegWarning }) {
     const navigate = useNavigate();
     const [isError, setError] = useState(false);
     const [isLoading, setLoading] = useState(false);
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
 
-    useEffect(async () => {
-        const resp = await fetch(usersUrl);
-        const json = await resp.json();
-    }, [])
+    // useEffect(async () => {
+    //     const resp = await fetch(usersUrl);
+    //     const json = await resp.json();
+    // }, [])
 
     const loginAction = async () => {
         try {
+            removeSuccessRegWarning();
             setError(false);
             setLoading(true);
             const response = await fetchWithTimeout(loginUrl, {
@@ -47,6 +48,7 @@ export default function App() {
 
     return (
         <React.Fragment>
+            {isSuccessReg && <Alert severity="success">Регистрация прошла успешно!</Alert>}
             <Input disabled={isLoading} name="Логин" handleChange={setLogin} />
             <Input disabled={isLoading} name="Пароль" handleChange={setPassword} type="password" />
             {isLoading

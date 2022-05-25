@@ -41,7 +41,7 @@ app.post("/api/SecretData/sharing", jsonParser, function(req, res){
     // })
     // .then(resp => resp.json())
     // .then(result => res.send(result));
-    var newurl = 'http://127.0.0.1:5267/api/SecretData/sharing';
+    var newurl = 'http://195.2.80.65:5267/api/SecretData/sharing';
     request(newurl).pipe(res);
 });
 
@@ -49,7 +49,7 @@ app.get("/api/Account/users", jsonParser, function(req, res){
     // fetch('http://195.2.80.65:5267/api/Account/users', req)
     // .then(resp => resp.json())
     // .then(result => res.send(result));
-    var newurl = 'http://127.0.0.1:5267/api/Account/users';
+    var newurl = 'http://195.2.80.65:5267/api/Account/users';
     request(newurl).pipe(res);
 });
 

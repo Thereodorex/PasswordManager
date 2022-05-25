@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start:prod": "nohup nodemon app.js  </dev/null >/dev/null 2>&1 &",
+    "start:prod": "nohup nodemon --watch app.js  </dev/null >/dev/null 2>&1 &",
     "start": "nodemon --watch app.js app.js",
     "build": "npm install && cd client && npm install && webpack"
   },

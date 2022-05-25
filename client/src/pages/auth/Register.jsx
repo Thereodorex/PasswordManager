@@ -7,7 +7,7 @@ import Input from '@components/input';
 import { registerUrl } from '@api';
 import fetchWithTimeout from '@utils/fetchWithTimeout';
 
-export default function App() {
+export default function Register({ setSuccessReg }) {
     const [isError, setError] = useState(false);
     const [isLoading, setLoading] = useState(false);
     const [login, setLogin] = useState('');
@@ -28,7 +28,8 @@ export default function App() {
                 'Content-Type': 'application/json'
                 }
             });
-            const json = await response.json();
+            await response.json();
+            setSuccessReg();
         } catch (_) {
             setError(true);
         } finally {
