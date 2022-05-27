@@ -34,7 +34,13 @@ export default function ShareModal({ shareItemId, setShareItemId }) {
 
   useEffect(() => {
     const fetchUsers = async () => {
-        fetch(usersUrl)
+        fetch(usersUrl, {
+          headers: {
+            'Access-Control-Allow-Origin': '*'
+          },
+          cookies: document.cookie,
+          credentials: 'include'
+        })
         .then(resp => resp.json())
         .then(res => {
             console.log(res);
@@ -56,7 +62,7 @@ export default function ShareModal({ shareItemId, setShareItemId }) {
             masterPassword: localStorage.getItem('masterPassword'),
         }),
         headers: {
-        'Content-Type': 'application/json'
+          'Content-Type': 'application/json'
         }
       });
       const json = await response.json();

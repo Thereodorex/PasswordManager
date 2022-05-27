@@ -13,29 +13,33 @@ export default function Register({ setSuccessReg }) {
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
 
-    const loginAction = async () => {
-        try {
-            setError(false);
-            setLoading(true);
-            const response = await fetchWithTimeout(registerUrl, {
-                timeout: 2500,
-                method: 'POST',
-                body: JSON.stringify({
-                    login,
-                    password,
-                }),
-                headers: {
-                'Content-Type': 'application/json'
-                }
-            });
-            await response.json();
+    const registerAction = () => {
+        setError(false);
+        setLoading(true);
+        fetchWithTimeout(registerUrl, {
+            timeout: 2500,
+            method: 'POST',
+            body: JSON.stringify({
+                login,
+                password,
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+            }
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Response is not ok');
+            }
             setSuccessReg();
-        } catch (_) {
+        })
+        .catch((e) => {
             setError(true);
-        } finally {
-            setLoading(false);
-        }
-    }
+            console.log(e);
+        });
+        setLoading(false);
+    };
 
     return (
         <React.Fragment>
@@ -43,7 +47,7 @@ export default function Register({ setSuccessReg }) {
             <Input disabled={isLoading} name="Пароль" handleChange={setPassword} type="password" />
             {isLoading
                 ? <CircularProgress />
-                : <Button onClick={loginAction} variant="contained">Зарегистрироваться</Button>
+                : <Button onClick={registerAction} variant="contained">Зарегистрироваться</Button>
             }
             {isError && <Stack sx={{ width: '100%' }} spacing={2}><Alert severity="error">Не удалось зарегистрироваться</Alert></Stack>}
         </React.Fragment>

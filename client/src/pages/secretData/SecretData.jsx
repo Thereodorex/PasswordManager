@@ -18,7 +18,7 @@ export default function SecretData() {
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
 
-    const handleChange = (panel) => (event, isExpanded) => {
+    const handleChange = (panel) => (_, isExpanded) => {
       setExpanded(isExpanded ? panel : false);
     };
 
@@ -35,15 +35,23 @@ export default function SecretData() {
         }
         const fetchData = async () => {
             try {
-                // setError(false);
-                // setLoading(true);
+
                 const response = await fetchWithTimeout(secretDataUrl, {
                     timeout: 2500,
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'accept': 'text/plain',
+                        'Access-Control-Allow-Origin': '*',
+                    },
+                    body: JSON.stringify(masterPassword)
                 });
+                if (!response.ok) {
+                    throw new Error(response);
+                }
                 const json = await response.json();
-                // localStorage.setItem('masterPassword', password);
                 const data = json;
-                setData(data);
+                setData(data.result);
             } catch (_) {
                 // setError(true);
             } finally {
@@ -69,15 +77,15 @@ export default function SecretData() {
             >
                 Выйти
             </Button>
-            {data.map(({_id, name, fields}) => {
+            {data.map(({id, name, fields}) => {
                 return (
                     <DataItem
                         expanded={expanded}
-                        key={_id}
-                        id={_id}
+                        key={id}
+                        id={id}
                         name={name}
-                        fields={fields}
-                        handleChange={handleChange(_id)}
+                        fields={Object.entries(fields).map(([name, value]) => ({name, value}))}
+                        handleChange={handleChange(id)}
                         setShareItemId={setShareItemId}
                     />
                 );

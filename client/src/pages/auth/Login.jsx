@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import Input from '@components/input';
 import { loginUrl, usersUrl } from '@api';
 import fetchWithTimeout from '@utils/fetchWithTimeout';
+import { responsiveFontSizes } from '@mui/material';
 
 export default function Login({ isSuccessReg, removeSuccessRegWarning }) {
     const navigate = useNavigate();
@@ -15,36 +16,35 @@ export default function Login({ isSuccessReg, removeSuccessRegWarning }) {
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
 
-    // useEffect(async () => {
-    //     const resp = await fetch(usersUrl);
-    //     const json = await resp.json();
-    // }, [])
-
-    const loginAction = async () => {
-        try {
-            removeSuccessRegWarning();
-            setError(false);
-            setLoading(true);
-            const response = await fetchWithTimeout(loginUrl, {
-                timeout: 2500,
-                method: 'POST',
-                body: JSON.stringify({
-                    login,
-                    password,
-                }),
-                headers: {
+    const loginAction = () => {
+        removeSuccessRegWarning();
+        setError(false);
+        setLoading(true);
+        fetchWithTimeout(loginUrl, {
+            timeout: 2500,
+            method: 'POST',
+            body: JSON.stringify({
+                login,
+                password,
+            }),
+            headers: {
                 'Content-Type': 'application/json'
-                }
-            });
-            const json = await response.json();
+            }
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Response is not ok');
+            }
             localStorage.setItem('masterPassword', password);
             navigate("../");
-        } catch (_) {
+        })
+        .catch(e => {
             setError(true);
-        } finally {
-            setLoading(false);
-        }
-    }
+            console.log(e);
+        });
+
+        setLoading(false);
+    };
 
     return (
         <React.Fragment>
