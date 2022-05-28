@@ -99,8 +99,9 @@ export default function NewItemModal() {
                     method: 'POST',
                     body: JSON.stringify({
                         name,
-                        fields,
+                        fields: fields.map(({name, value}) => ({name, value})),
                         masterPassword: localStorage.getItem('masterPassword'),
+                        dataTypeId: currentType,
                     }),
                     headers: {
                     'Content-Type': 'application/json'
